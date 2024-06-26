@@ -32,7 +32,7 @@ frappe.ui.form.on('Item', {
 });
 function display_mandatory_fields(frm, fields, doc) {
     let html = '<div class="card"><div class="card-body">';
-    html += '<h5 class="card-title" style=" padding-bottom: 10px; margin-bottom: 20px; font-size: 1.5em; font-weight: bold; color: #333;">Vehicle Details</h5>';
+    html += '<h5 class="card-title" style="padding-bottom: 10px; margin-bottom: 20px; font-size: 1.5em; font-weight: bold; color: #333;">Vehicle Details</h5>';
     html += '<div class="row">';
     fields.forEach(field => {
         html += `<div class="col-md-6" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
