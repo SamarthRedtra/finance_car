@@ -29,8 +29,11 @@ app_license = "mit"
 
 # include js in doctype views
 
-doctype_js = {"Item" : "public/js/item.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_js = { "Item" : "public/js/item.js", 
+                "Sales Invoice":"public/js/sales_invoice.js",
+                "Purchase Order":"public/js/purchase_order.js",
+                }
+doctype_list_js = {"Purchase Order" : "public/js/purchase_order_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -115,9 +118,9 @@ doctype_js = {"Item" : "public/js/item.js"}
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+	"Purchase Order": "finance_car.overrides.purchase_order.CustomPurchaseOrder",
+}
 
 # Document Events
 # ---------------

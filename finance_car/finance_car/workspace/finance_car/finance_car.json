@@ -1,0 +1,59 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"RsDiOf28K5\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Finance Car</span>\",\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}}]",
+ "creation": "2024-08-08 21:07:42.178507",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "retail",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Finance Car",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Masters",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Car Item",
+   "link_count": 0,
+   "link_to": "Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Vehicle / Car",
+   "link_count": 0,
+   "link_to": "FC Vehicle",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-08-08 21:30:00.721035",
+ "modified_by": "samarth.upare@redtra.com",
+ "module": "Finance Car",
+ "name": "Finance Car",
+ "number_cards": [],
+ "owner": "samarth.upare@redtra.com",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [],
+ "title": "Finance Car"
+}
