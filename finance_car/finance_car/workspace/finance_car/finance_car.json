@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}}]",
+ "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}}]",
  "creation": "2024-08-08 21:07:42.178507",
  "custom_blocks": [
   {
@@ -52,7 +52,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-08-10 01:28:37.377184",
+ "modified": "2024-08-10 01:30:17.681385",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car",
