@@ -1,0 +1,24 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
+  "html": "<div class=\"row\">\n    <div class=\"col-md-12\">\n        <div class=\"card\">\n            <div class=\"card-header\">\n                <h4>Quick Accouting Actions</h4>\n            </div>\n            <div class=\"card-body\">\n                <div class=\"row\">\n                    <div class=\"col-md-3\">\n                        <a href=\"/app/journal-entry/new?voucher_type=Credit+Note\" class=\"shortcut\">\n                            <div class=\"card text-center\">\n                                <div class=\"card-body\">\n                                    <i class=\"fa fa-file-text-o fa-2x mb-2\"></i>\n                                    <h6>Credit Note</h6>\n                                </div>\n                            </div>\n                        </a>\n                    </div>\n                    <div class=\"col-md-3\">\n                        <a href=\"/app/journal-entry/new?voucher_type=Debit+Note\" class=\"shortcut\">\n                            <div class=\"card text-center\">\n                                <div class=\"card-body\">\n                                    <i class=\"fa fa-file-text-o fa-2x mb-2\"></i>\n                                    <h6>Debit Note</h6>\n                                </div>\n                            </div>\n                        </a>\n                    </div>\n                    <div class=\"col-md-3\">\n                        <a href=\"/app/journal-entry/new?voucher_type=Bank+Entry\" class=\"shortcut\">\n                            <div class=\"card text-center\">\n                                <div class=\"card-body\">\n                                    <i class=\"fa fa-university fa-2x mb-2\"></i>\n                                    <h6>Bank Entry</h6>\n                                </div>\n                            </div>\n                        </a>\n                    </div>\n                    <div class=\"col-md-3\">\n                        <a href=\"/app/journal-entry/new?voucher_type=Cash+Entry\" class=\"shortcut\">\n                            <div class=\"card text-center\">\n                                <div class=\"card-body\">\n                                    <i class=\"fa fa-money fa-2x mb-2\"></i>\n                                    <h6>Cash Entry</h6>\n                                </div>\n                            </div>\n                        </a>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n",
+  "modified": "2024-08-10 01:19:34.152259",
+  "name": "Accounting Entries",
+  "private": 0,
+  "roles": [],
+  "script": null,
+  "style": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
+  "html": "<div class=\"title-container\">\n    <div class=\"title-content\">\n        <div class=\"car-icon\">\n            <!-- Car SVG Icon -->\n            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"50px\" height=\"50px\">\n                <path d=\"M20.772,11.366l-1.681-5.04C18.773,5.509,18.273,5,17.687,5H6.314C5.728,5,5.228,5.509,5.055,6.326l-1.681,5.04C3.047,11.498,3,11.75,3,12v7c0,0.553,0.447,1,1,1h1c0.553,0,1-0.447,1-1v-1h12v1c0,0.553,0.447,1,1,1h1c0.553,0,1-0.447,1-1v-7C21,11.75,20.953,11.498,20.772,11.366z M6.78,6.999h10.44l1.288,3.87H5.493L6.78,6.999z M7,17c-0.553,0-1-0.447-1-1c0-0.553,0.447-1,1-1s1,0.447,1,1C8,16.553,7.553,17,7,17z M17,17c-0.553,0-1-0.447-1-1c0-0.553,0.447-1,1-1s1,0.447,1,1C18,16.553,17.553,17,17,17z\"/>\n            </svg>\n        </div>\n        <div class=\"company-title\">\n            Finance Car\n        </div>\n    </div>\n</div>\n",
+  "modified": "2024-08-10 01:27:51.030145",
+  "name": "Finance Car Title",
+  "private": 0,
+  "roles": [],
+  "script": null,
+  "style": ".title-container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    background-color: #00274D; /* Dark Blue Background */\n    padding: 20px;\n    border-radius: 8px;\n    margin-bottom: 20px;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n}\n\n.title-content {\n    display: flex;\n    align-items: center;\n}\n\n.car-icon svg {\n    fill: #FFD700; /* Gold color for the car icon */\n    margin-right: 15px;\n \n}\n\n.company-title {\n    font-family: 'Roboto', sans-serif;\n    font-size: 32px;\n    font-weight: 700;\n    color: #FFFFFF; /* White color for the text */\n    letter-spacing: 2px;\n    text-transform: uppercase;\n}\n"
+ }
+]

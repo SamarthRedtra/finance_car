@@ -1,8 +1,17 @@
 {
  "charts": [],
- "content": "[{\"id\":\"RsDiOf28K5\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Finance Car</span>\",\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}}]",
+ "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}}]",
  "creation": "2024-08-08 21:07:42.178507",
- "custom_blocks": [],
+ "custom_blocks": [
+  {
+   "custom_block_name": "Accounting Entries",
+   "label": "Accounting Entries"
+  },
+  {
+   "custom_block_name": "Finance Car Title",
+   "label": "Finance Car Title"
+  }
+ ],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
@@ -43,8 +52,8 @@
    "type": "Link"
   }
  ],
- "modified": "2024-08-08 21:30:00.721035",
- "modified_by": "samarth.upare@redtra.com",
+ "modified": "2024-08-10 01:28:37.377184",
+ "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car",
  "number_cards": [],

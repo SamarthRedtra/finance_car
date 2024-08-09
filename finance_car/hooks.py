@@ -32,6 +32,7 @@ app_license = "mit"
 doctype_js = { "Item" : "public/js/item.js", 
                 "Sales Invoice":"public/js/sales_invoice.js",
                 "Purchase Order":"public/js/purchase_order.js",
+                "Journal Entry":"public/js/journal_entry.js",
                 }
 doctype_list_js = {"Purchase Order" : "public/js/purchase_order_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -231,3 +232,6 @@ override_doctype_class = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+fixtures=[
+    {"dt": "Custom HTML Block"}
+]
