@@ -37,7 +37,7 @@ doctype_js = { "Item" : "public/js/item.js",
                 "Purchase Receipt":"public/js/purchase_receipt.js",
                 }
 doctype_list_js = {"Purchase Order" : "public/js/purchase_order_list.js"}
-# doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
+doctype_tree_js = {"Account" : "public/js/account_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
 # Svg Icons
