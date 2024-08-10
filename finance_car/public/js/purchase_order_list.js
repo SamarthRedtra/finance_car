@@ -18,7 +18,7 @@ frappe.listview_settings["Purchase Order"] = {
         }
         if (doc.status === "Pending CIT") {
             console.log('hhehe')
-			return [__("At CIT"), "orange", "status,=,Pending CIT"];
+			return [__("To CIT"), "orange", "status,=,Pending CIT"];
 		}
 		if (doc.status === "Closed") {
 			return [__("Closed"), "green", "status,=,Closed"];

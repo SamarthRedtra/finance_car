@@ -33,6 +33,8 @@ doctype_js = { "Item" : "public/js/item.js",
                 "Sales Invoice":"public/js/sales_invoice.js",
                 "Purchase Order":"public/js/purchase_order.js",
                 "Journal Entry":"public/js/journal_entry.js",
+                "Account":"public/js/account.js",
+                "Purchase Receipt":"public/js/purchase_receipt.js",
                 }
 doctype_list_js = {"Purchase Order" : "public/js/purchase_order_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -121,6 +123,8 @@ doctype_list_js = {"Purchase Order" : "public/js/purchase_order_list.js"}
 
 override_doctype_class = {
 	"Purchase Order": "finance_car.overrides.purchase_order.CustomPurchaseOrder",
+    "Sales Invoice": "finance_car.overrides.sales_invoice.CustomSalesInvoice",
+    "Purchase Receipt": "finance_car.overrides.purchase_receipt.CustomPurchaseReceipt"
 }
 
 # Document Events
@@ -233,5 +237,8 @@ override_doctype_class = {
 # }
 
 fixtures=[
-    {"dt": "Custom HTML Block"}
+    {"dt": "Custom HTML Block"},
+    {'dt':'Workflow State'},
+    {'dt':'Workflow Action Master'},
+    {'dt':'Workflow'}
 ]

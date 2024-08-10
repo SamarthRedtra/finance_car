@@ -22,7 +22,7 @@ frappe.ui.form.on('Item', {
                                     mandatory_fields.push(field);
                                 }
                             });
-                            display_mandatory_fields(frm, mandatory_fields,r.message);
+                            //display_mandatory_fields(frm, mandatory_fields,r.message);
                         });
                     }
                 }

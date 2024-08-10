@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}}]",
+ "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"5WRz1dsPKI\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
  "creation": "2024-08-08 21:07:42.178507",
  "custom_blocks": [
   {
@@ -26,7 +26,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Masters",
-   "link_count": 2,
+   "link_count": 3,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -50,9 +50,58 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Supplier",
+   "link_count": 0,
+   "link_to": "Supplier",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transactions",
+   "link_count": 3,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchase Order / CIT",
+   "link_count": 0,
+   "link_to": "Purchase Order",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchase Receipt",
+   "link_count": 0,
+   "link_to": "Purchase Receipt",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice",
+   "link_count": 0,
+   "link_to": "Sales Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2024-08-10 01:30:17.681385",
+ "modified": "2024-08-10 16:40:42.906877",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car",
