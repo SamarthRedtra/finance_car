@@ -237,8 +237,7 @@
   {
    "fieldname": "investor_name",
    "fieldtype": "Data",
-   "label": "Investor Name",
-   "reqd": 1
+   "label": "Investor Name"
   },
   {
    "fieldname": "column_break_yvyt",
@@ -247,18 +246,16 @@
   {
    "fieldname": "supplier_name",
    "fieldtype": "Data",
-   "label": "Supplier Name",
-   "reqd": 1
+   "label": "Supplier Name"
   },
   {
    "fieldname": "mulkia_name",
    "fieldtype": "Data",
-   "label": "Mulkia Name",
-   "reqd": 1
+   "label": "Mulkia Name"
   }
  ],
  "links": [],
- "modified": "2024-06-26 00:55:01.217660",
+ "modified": "2024-08-13 23:13:12.559898",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "FC Vehicle",
