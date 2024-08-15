@@ -64,7 +64,7 @@ def make_purchase_receipt(source_name, target_doc=None):
             target.account = None
             target.debit = 0   
         
-
+        
     doc = get_mapped_doc(
         "Purchase Order",
         source_name,

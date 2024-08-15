@@ -18,9 +18,10 @@
   },
   {
    "default": "0",
+   "description": "Note: It will only Merge Same Accounting Entries of Purchase Receipt (GRN)",
    "fieldname": "merge_accouting_entries",
    "fieldtype": "Check",
-   "label": "Merge Accouting Entries"
+   "label": "Merge Accounting Entries"
   },
   {
    "fieldname": "column_break_hpam",
@@ -37,7 +38,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-15 18:47:00.526718",
+ "modified": "2024-08-15 22:49:12.576739",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car Settings",
