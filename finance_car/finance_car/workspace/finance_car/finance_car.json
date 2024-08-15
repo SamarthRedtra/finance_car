@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"5WRz1dsPKI\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
+ "content": "[{\"id\":\"GvbY_GJLxf\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Finance Car Title\",\"col\":12}},{\"id\":\"jdQmtP5s1b\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Accounting Entries\",\"col\":12}},{\"id\":\"gHRUTxW_RX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jLrctxqZ4y\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"5WRz1dsPKI\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}},{\"id\":\"-B1uVp9WfY\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
  "creation": "2024-08-08 21:07:42.178507",
  "custom_blocks": [
   {
@@ -99,9 +99,28 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Finance Car Settings",
+   "link_count": 0,
+   "link_to": "Finance Car Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2024-08-10 16:40:42.906877",
+ "modified": "2024-08-15 17:36:40.884068",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car",
