@@ -182,4 +182,4 @@ class CustomStockController(StockController):
                         ).format(wh, self.company)
                     )
 
-        return process_gl_map(gl_list, precision=precision)
+        return process_gl_map(gl_list, merge_entries=False, precision=precision)
