@@ -13,8 +13,9 @@ frappe.ui.form.on('Accounting Entries', {
                 row.debit = 0;
     
             }
-            else if( row.debit < 0 && row.credit>0) {
-                frm.get_field("custom_accouting_entry").grid.grid_rows_by_docname[cdn].remove();
+            else if(row.credit>0) {
+                row.remove()
+                //frm.get_field("custom_accouting_entry").grid.grid_rows_by_docname[cdn].remove();
             }
             frm.refresh_field('custom_accouting_entry');
             
@@ -40,7 +41,7 @@ frappe.ui.form.on('Purchase Receipt', {
 
                     // Mark the row for deletion
                     
-                }else if( data.debit == 0 && data.credit>0) {
+                }else if(data.credit>0) {
                     row.remove();
                     //frm.get_field("custom_accouting_entry").grid.grid_rows_by_docname[row.docname].remove();
                 }
