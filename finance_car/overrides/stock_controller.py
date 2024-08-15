@@ -33,7 +33,13 @@ class CustomStockController(StockController):
                 if not gl_entries:
                     gl_entries = self.get_gl_entriess(warehouse_account, via_landed_cost_voucher)
                     print(gl_entries,"0000")	
-                make_gl_entries(gl_entries, from_repost=from_repost)
+
+                merge_value = frappe.get_doc(
+                    'Finance Car Settings'
+                ).merge_accouting_entries   
+                
+                merge_value = False if merge_value == 0 else True
+                make_gl_entries(gl_entries, merge_entries=merge_value,from_repost=from_repost)
 
     def get_gl_entriess(self, warehouse_account=None, default_expense_account=None, default_cost_center=None):
         if not warehouse_account:

@@ -1,0 +1,57 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-15 17:35:36.459787",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "accouting_entries_section",
+  "merge_accouting_entries"
+ ],
+ "fields": [
+  {
+   "fieldname": "accouting_entries_section",
+   "fieldtype": "Section Break",
+   "label": "Accouting Entries"
+  },
+  {
+   "default": "0",
+   "fieldname": "merge_accouting_entries",
+   "fieldtype": "Check",
+   "label": "Merge Accouting Entries"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-08-15 17:36:06.698920",
+ "modified_by": "Administrator",
+ "module": "Finance Car",
+ "name": "Finance Car Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
