@@ -8,12 +8,12 @@ import frappe
 class CustomPurchaseOrder(PurchaseOrder):
     def on_update(self):
         old_doc = self.get_doc_before_save()
-        if self.docstatus == 0 and self.workflow_state == 'Pending CIT' and old_doc.workflow_state != 'Pending CIT':
+        if self.docstatus == 0 and self.workflow_state == 'Pending CIT':
             # if len(self.custom_accouting_entry) == 0:
             #     frappe.throw('Please Put Accouting Entry For CIT Accounting')
             # self.post_accouting_entry()    
             frappe.db.sql("UPDATE `tabPurchase Order` SET status = 'Pending CIT' WHERE name = %(name)s", {'name':self.name})
-            frappe.db.set_value('Purchase Order', self.name, 'status', 'Pending CIT')
+            self.reload()
             print('Exscuteds')
 
     def post_accouting_entry(self):

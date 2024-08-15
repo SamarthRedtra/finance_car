@@ -104,7 +104,8 @@
    "fieldname": "chassis_no",
    "fieldtype": "Data",
    "label": "Chassis No",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "vehicle_value",
@@ -255,7 +256,7 @@
   }
  ],
  "links": [],
- "modified": "2024-08-13 23:13:12.559898",
+ "modified": "2024-08-15 14:25:54.661847",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "FC Vehicle",
