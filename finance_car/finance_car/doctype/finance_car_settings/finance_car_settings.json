@@ -6,7 +6,9 @@
  "engine": "InnoDB",
  "field_order": [
   "accouting_entries_section",
-  "merge_accouting_entries"
+  "merge_accouting_entries",
+  "column_break_hpam",
+  "purchase_account"
  ],
  "fields": [
   {
@@ -19,12 +21,23 @@
    "fieldname": "merge_accouting_entries",
    "fieldtype": "Check",
    "label": "Merge Accouting Entries"
+  },
+  {
+   "fieldname": "column_break_hpam",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchase_account",
+   "fieldtype": "Link",
+   "label": "Purchase Account",
+   "link_filters": "[[\"Account\",\"report_type\",\"=\",\"Profit and Loss\"]]",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-15 17:36:06.698920",
+ "modified": "2024-08-15 18:47:00.526718",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car Settings",
