@@ -7,6 +7,7 @@
  "field_order": [
   "accouting_entries_section",
   "merge_accouting_entries",
+  "chassis_no_length",
   "column_break_hpam",
   "purchase_account"
  ],
@@ -33,12 +34,17 @@
    "label": "Purchase Account",
    "link_filters": "[[\"Account\",\"report_type\",\"=\",\"Profit and Loss\"]]",
    "options": "Account"
+  },
+  {
+   "fieldname": "chassis_no_length",
+   "fieldtype": "Int",
+   "label": "Chassis No Minimum Length"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-15 22:49:12.576739",
+ "modified": "2024-08-23 23:57:12.673536",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "Finance Car Settings",
