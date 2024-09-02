@@ -28,14 +28,14 @@ class CustomPurchaseReceipt(PurchaseReceipt,CustomStockController):
         # because updating ordered qty, reserved_qty_for_subcontract in bin
         # depends upon updated ordered qty in PO
         super().update_stock_ledger()
-        self.make_gl_entries()
+        self.make_gl_entries(gl_entries=None, from_repost=False, via_landed_cost_voucher=False)
         super().repost_future_sle_and_gle()
         super().set_consumed_qty_in_subcontract_order()
         super().reserve_stock_for_sales_order()
 
 
-    def make_gl_entries(self):
+    def make_gl_entries(self, gl_entries=None, from_repost=False, via_landed_cost_voucher=False):
         from finance_car.overrides.stock_controller import CustomStockController
-        CustomStockController.make_gl_entries(self)
+        CustomStockController.make_gl_entries(self, gl_entries, from_repost, via_landed_cost_voucher)
         print("accouting Entry from custom doc added")
         
