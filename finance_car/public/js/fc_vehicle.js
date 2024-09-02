@@ -43,7 +43,7 @@ frappe.ui.form.FCVehicleQuickEntryForm = class FCVehicleQuickEntryForm extends f
                     // Check if the chassis number has the required minimum length
                     if (chassis_number.length < required_length) {
                         frappe.msgprint(__('Chassis number must be at least {0} characters long.', [required_length]), 'Validation');
-                        this.dialog.set_value('chassis_no', '');
+                        // this.dialog.set_value('chassis_no', '');
                         return;
                     }
 
@@ -61,7 +61,7 @@ frappe.ui.form.FCVehicleQuickEntryForm = class FCVehicleQuickEntryForm extends f
                             if (response.message.name) {
                                 // Show message below the field
                                 frappe.msgprint(__('Chassis number already exists in the system. Please enter a different one.'), 'Duplicate Entry');
-                                this.dialog.set_value('chassis_no', '');
+                                // this.dialog.set_value('chassis_no', '');
                             }
                         }
                     });

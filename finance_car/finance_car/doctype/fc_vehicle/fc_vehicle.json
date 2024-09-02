@@ -93,8 +93,9 @@
   },
   {
    "fieldname": "location",
-   "fieldtype": "Data",
-   "label": "Location"
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Warehouse"
   },
   {
    "fieldname": "column_break_8",
@@ -239,7 +240,8 @@
   {
    "fieldname": "investor_name",
    "fieldtype": "Data",
-   "label": "Investor Name"
+   "label": "Investor Name",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_yvyt",
@@ -253,11 +255,12 @@
   {
    "fieldname": "mulkia_name",
    "fieldtype": "Data",
-   "label": "Mulkia Name"
+   "label": "Mulkia Name",
+   "reqd": 1
   }
  ],
  "links": [],
- "modified": "2024-08-24 01:27:50.944668",
+ "modified": "2024-09-03 00:03:14.233915",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "FC Vehicle",

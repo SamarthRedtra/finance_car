@@ -53,3 +53,34 @@ frappe.ui.form.on('Purchase Receipt', {
     }
 });
 
+frappe.ui.form.on('Accounting Entries', {
+    debit: function(frm, cdt, cdn) {
+        calculate_totals(frm);
+    },
+    credit: function(frm, cdt, cdn) {
+        calculate_totals(frm);
+    },
+    custom_accouting_entry_remove: function(frm, cdt, cdn) {
+        calculate_totals(frm);
+    }
+});
+
+
+function calculate_totals(frm) {
+    let total_debit = 0;
+    let total_credit = 0;
+
+    // Iterate through each row in the custom_accouting_entry child table
+    frm.doc.custom_accouting_entry.forEach(function(row) {
+        total_debit += flt(row.debit);
+        total_credit += flt(row.credit);
+    });
+
+    // Set the calculated totals to the respective fields in the Purchase Order doctype
+    frm.set_value('custom_total_debit', total_debit);
+    frm.set_value('custom_total_credit', total_credit);
+    frm.refresh_field('custom_total_debit');
+    frm.refresh_field('custom_total_credit');
+    console.log(total_debit, total_credit,"00")
+}
+
