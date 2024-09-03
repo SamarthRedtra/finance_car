@@ -64,9 +64,13 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
                         item=custom_entry
                     )
                 ) 
-
-
-        return process_gl_map(gl_entries)    
+        
+        merge_value = frappe.get_doc(
+                    'Finance Car Settings'
+                ).merge_accouting_entries   
+                
+        merge_value = False if merge_value == 0 else True        
+        return process_gl_map(gl_entries, merge_entries=merge_value)    
 
 
     # def make_gl_entries(self, gl_entries=None, from_repost=False, via_landed_cost_voucher=False):
