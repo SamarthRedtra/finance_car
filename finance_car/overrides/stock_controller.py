@@ -154,7 +154,7 @@ class CustomStockController(StockController):
                     )
                 )
 
-        gl_list = []
+        # gl_list = []
         if len(self.custom_accouting_entry) > 0:
             for custom_entry in self.custom_accouting_entry:
                 gl_list.append(
