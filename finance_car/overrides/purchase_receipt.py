@@ -34,8 +34,8 @@ class CustomPurchaseReceipt(PurchaseReceipt,CustomStockController):
         super().reserve_stock_for_sales_order()
 
 
-    def make_gl_entries(self, gl_entries=None, from_repost=False, via_landed_cost_voucher=False):
-        from finance_car.overrides.stock_controller import CustomStockController
-        CustomStockController.make_gl_entries(self, gl_entries, from_repost, via_landed_cost_voucher)
-        print("accouting Entry from custom doc added")
+    # def make_gl_entries(self, gl_entries=None, from_repost=False, via_landed_cost_voucher=False):
+    #     from finance_car.overrides.stock_controller import CustomStockController
+    #     CustomStockController.make_gl_entries(self, gl_entries, from_repost, via_landed_cost_voucher)
+    #     print("accouting Entry from custom doc added")
         
