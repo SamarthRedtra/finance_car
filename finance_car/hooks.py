@@ -125,7 +125,7 @@ doctype_tree_js = {"Account" : "public/js/account_tree.js"}
 override_doctype_class = {
 	"Purchase Order": "finance_car.overrides.purchase_order.CustomPurchaseOrder",
     "Sales Invoice": "finance_car.overrides.sales_invoice.CustomSalesInvoice",
-    # "Purchase Receipt": "finance_car.overrides.purchase_receipt.CustomPurchaseReceipt"
+    "Purchase Receipt": "finance_car.overrides.purchase_receipt.CustomPurchaseReceipt"
 }
 
 # Document Events
