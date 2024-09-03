@@ -31,24 +31,22 @@ class CustomStockController(StockController):
             warehouse_account = get_warehouse_account_map(self.company)
             if self.docstatus == 1:
                 if not gl_entries:
-                    gl_entries = self.get_gl_entriess(warehouse_account, via_landed_cost_voucher)
-                    print(gl_entries,"0000")	
+                    gl_entries = self.get_gl_entries(warehouse_account, via_landed_cost_voucher) if via_landed_cost_voucher == True else self.get_gl_entries(warehouse_account) 
 
                 merge_value = frappe.get_doc(
                     'Finance Car Settings'
                 ).merge_accouting_entries   
                 
                 merge_value = False if merge_value == 0 else True
-                #make_gl_entries(gl_entries, merge_entries=merge_value,from_repost=from_repost)
-                make_gl_entries(gl_entries, from_repost=from_repost)
+                make_gl_entries(gl_entries, merge_entries=merge_value,from_repost=from_repost)
+                #make_gl_entries(gl_entries, from_repost=from_repost)
 
     def get_gl_entriess(self, warehouse_account=None, default_expense_account=None, default_cost_center=None):
         if not warehouse_account:
             warehouse_account = get_warehouse_account_map(self.company)
-
+            
         sle_map = self.get_stock_ledger_details()
         voucher_details = self.get_voucher_details(default_expense_account, default_cost_center, sle_map)
-
         gl_list = []
         warehouse_with_no_account = []
         precision = self.get_debit_field_precision()
@@ -71,6 +69,7 @@ class CustomStockController(StockController):
                             expense_account = warehouse_account[warehouse]["account"]
                         else:
                             expense_account = item_row.expense_account
+                         
 
                         gl_list.append(
                             self.get_gl_dict(
@@ -154,8 +153,7 @@ class CustomStockController(StockController):
                         item=item_row,
                     )
                 )
-
-        # gl_list = []
+                
         if len(self.custom_accouting_entry) > 0:
             for custom_entry in self.custom_accouting_entry:
                 gl_list.append(
@@ -189,4 +187,4 @@ class CustomStockController(StockController):
                         ).format(wh, self.company)
                     )
 
-        return process_gl_map(gl_list, merge_entries=False, precision=precision)
+        return process_gl_map(gl_list,merge_entries=False, precision=precision)
