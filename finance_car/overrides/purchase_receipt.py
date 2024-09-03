@@ -28,7 +28,7 @@ class CustomPurchaseReceipt(PurchaseReceipt,CustomStockController):
         # because updating ordered qty, reserved_qty_for_subcontract in bin
         # depends upon updated ordered qty in PO
         super().update_stock_ledger()
-        self.make_gl_entries(gl_entries=None, from_repost=False, via_landed_cost_voucher=False)
+        self.make_gl_entries()
         super().repost_future_sle_and_gle()
         super().set_consumed_qty_in_subcontract_order()
         super().reserve_stock_for_sales_order()
