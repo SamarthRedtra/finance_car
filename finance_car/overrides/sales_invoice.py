@@ -60,12 +60,20 @@ class CustomSalesInvoice(SalesInvoice):
         self.make_write_off_gl_entry(gl_entries)
         self.make_gle_for_rounding_adjustment(gl_entries)
         print("gl entries",gl_entries)
-        
+        total_debit = 0
+        total_credit = 0
         if len(gl_entries)>0:
             for i in gl_entries:
+                total_debit += i.debit
+                total_credit += i.credit
                 self.append("custom_accouting_entry", {
                     'account': i.account,
                     'debit': i.debit,
                     'credit': i.credit,
                 })
+                
+        self.custom_total_debit = flt(total_debit) 
+        self.custom_total_credit = flt(total_credit)       
+                
+                
         

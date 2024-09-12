@@ -79,6 +79,10 @@ frappe.ui.form.on('Sales Invoice', {
                                 new_row.debit = 0;                 
                             }
                         });
+                        frm.doc.custom_accouting_entry.forEach(function(row) {
+                            frm.script_manager.trigger('debit', row.doctype, row.name);
+                            frm.script_manager.trigger('credit', row.doctype, row.name);
+                        });
                         // Refresh the child table in the Sales Invoice form
                         frm.refresh_field('custom_accouting_entry');
                     } else {
