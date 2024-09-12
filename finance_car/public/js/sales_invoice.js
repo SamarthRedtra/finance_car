@@ -43,7 +43,7 @@ frappe.ui.form.on('Sales Invoice Item', {
                 }
             });
         }
-    }
+    },
 });
 
 frappe.ui.form.on('Accounting Entries', {
@@ -58,6 +58,36 @@ frappe.ui.form.on('Accounting Entries', {
     }
 });
 
+frappe.ui.form.on('Sales Invoice', {
+    // Trigger this function when the custom_purchase_receipt field is updated
+    custom_purchase_receipt: function(frm) {
+        console.log('hshhess changes')
+        if (frm.doc.custom_purchase_receipt) {
+            // Fetch the Purchase Receipt document
+            frappe.db.get_doc('Purchase Receipt', frm.doc.custom_purchase_receipt)
+                .then(doc => {
+                    console.log(doc,"doc ")
+                    // Ensure that the Purchase Receipt has accounting entries
+                    if (doc.custom_accouting_entry && doc.custom_accouting_entry.length > 0) {
+                        // Loop through accounting entries in the Purchase Receipt
+                        doc.custom_accouting_entry.forEach(entry => {
+                            if (entry.debit > 0) { // Only consider entries with debit values
+                                // Append to the Sales Invoice's child table
+                                let new_row = frm.add_child('custom_accouting_entry');
+                                new_row.account = entry.account;  // Set account value
+                                new_row.credit = entry.debit;      // Set debit value
+                                new_row.debit = 0;                 
+                            }
+                        });
+                        // Refresh the child table in the Sales Invoice form
+                        frm.refresh_field('custom_accouting_entry');
+                    } else {
+                        frappe.msgprint(__('No accounting entries found in the selected Purchase Receipt.'));
+                    }
+                });
+        }
+    }
+});
 
 function calculate_totals(frm) {
     let total_debit = 0;
