@@ -25,7 +25,7 @@ def get_item_account_wise_additional_cost(purchase_document):
     )
 
     if not landed_cost_vouchers:
-        return
+        return None,[]
 
     item_account_wise_cost = {}
     debit_account_list = []
@@ -68,7 +68,8 @@ def get_item_account_wise_additional_cost(purchase_document):
                         item_account_wise_cost[(item.item_code, item.purchase_receipt_item)][
                             account.expense_account
                         ]["base_amount"] += item.applicable_charges
-
+                        
+    print(" debit_account_list",debit_account_list)
     return item_account_wise_cost,debit_account_list
 
 
@@ -136,19 +137,20 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
                         )
                         
             ### make debit entry 
-            debit_new_amount = flt(item.landed_cost_voucher_amount / len(debit_accounts))
-            for dbcnt in debit_accounts:
-                self.add_gl_entry(
-                    gl_entries=gl_entries,
-                    account=dbcnt,
-                    cost_center=item.cost_center,
-                    debit=debit_new_amount,
-                    against_account=stock_asset_account_name,
-                    credit=0.0,
-                    remarks=remarks,
-                    project=item.project,
-                    item=item,
-                )            
+                debit_new_amount = flt(item.landed_cost_voucher_amount / len(debit_accounts))
+                frappe.db.set_value('Purchase Receipt Item', item.name, 'custom_debit_account', debit_accounts[-1])
+                for dbcnt in debit_accounts:
+                    self.add_gl_entry(
+                        gl_entries=gl_entries,
+                        account=dbcnt,
+                        cost_center=item.cost_center,
+                        debit=debit_new_amount,
+                        against_account=stock_asset_account_name,
+                        credit=0.0,
+                        remarks=remarks,
+                        project=item.project,
+                        item=item,
+                    )            
         if via_landed_cost_voucher:
             for d in self.get("items"):
                 """ For Landed Cost Voucher """
@@ -161,7 +163,7 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
                         stock_asset_account_name = d.expense_account
                     elif warehouse_account.get(d.warehouse):
                         stock_asset_account_name = warehouse_account[d.warehouse]["account"]
-                    if (flt(d.valuation_rate) or self.is_return or d.is_fixed_asset) and flt(d.qty):
+                    if (flt(d.valuation_rate) or self.is_return or d.is_fixed_asset) and flt(d.qty) :
                         make_landed_cost_gl_entries(d,debit_accounts)
         
         update_regional_gl_entries(gl_entries, self)               

@@ -88,6 +88,28 @@ frappe.ui.form.on('Sales Invoice', {
                     } else {
                         frappe.msgprint(__('No accounting entries found in the selected Purchase Receipt.'));
                     }
+                    if (doc.items && doc.items.length > 0) {
+                        // Loop through accounting entries in the Purchase Receipt
+                        doc.items.forEach(entry => {
+                            if (entry.landed_cost_voucher_amount > 0 && entry.custom_debit_account) { // Only consider entries with debit values
+                                // Append to the Sales Invoice's child table
+                                let new_row = frm.add_child('custom_accouting_entry');
+                                new_row.account = entry.custom_debit_account;  // Set account value
+                                new_row.credit = entry.landed_cost_voucher_amount;      // Set debit value
+                                new_row.debit = 0;                 
+                            }
+                        });
+                        frm.doc.custom_accouting_entry.forEach(function(row) {
+                            frm.script_manager.trigger('debit', row.doctype, row.name);
+                            frm.script_manager.trigger('credit', row.doctype, row.name);
+                        });
+                        // Refresh the child table in the Sales Invoice form
+                        frm.refresh_field('custom_accouting_entry');
+                    } else {
+                        frappe.msgprint(__('No landed cost entries found in the selected Purchase Receipt.'));
+                    }
+
+
                 });
         }
     }
