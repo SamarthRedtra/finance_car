@@ -2,6 +2,7 @@ from erpnext.accounts.doctype.sales_invoice.sales_invoice import SalesInvoice
 from frappe.utils import cint, flt
 import frappe
 from frappe import _
+import json
 
 class CustomSalesInvoice(SalesInvoice):
     def get_gl_entries(self, warehouse_account=None):
@@ -87,14 +88,15 @@ class CustomSalesInvoice(SalesInvoice):
                             'credit': i.debit,
                         })
                 
-            if len(purchase_receipt.items)>0:
-                for i in purchase_receipt.items:
-                    if i.custom_debit_account and i.landed_cost_voucher_amount>0:
+            if purchase_receipt.custom_landed_cost_details:
+                debits_accounts = json.loads(purchase_receipt.custom_landed_cost_details)
+                for i in debits_accounts:
+                    if i.get('account') and i.get('amount')>0:
                         total_credit += i.landed_cost_voucher_amount
                         self.append("custom_accouting_entry", {
-                            'account': i.custom_debit_account,
+                            'account': i.get('account'),
                             'debit': 0,
-                            'credit': i.landed_cost_voucher_amount
+                            'credit': i.get('amount')
                         })        
                         
                 

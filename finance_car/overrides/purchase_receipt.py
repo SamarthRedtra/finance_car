@@ -32,7 +32,7 @@ def get_item_account_wise_additional_cost(purchase_document):
 
     for lcv in landed_cost_vouchers:
         landed_cost_voucher_doc = frappe.get_doc("Landed Cost Voucher", lcv.parent)
-        debit_account_list.append(landed_cost_voucher_doc.custom_debit_account)
+        debit_account_new = landed_cost_voucher_doc.custom_debit_account
 
         based_on_field = None
         # Use amount field for total item cost for manually cost distributed LCVs
@@ -40,6 +40,12 @@ def get_item_account_wise_additional_cost(purchase_document):
             based_on_field = frappe.scrub(landed_cost_voucher_doc.distribute_charges_based_on)
 
         total_item_cost = 0
+        total_cost_debit_account = 0
+        if landed_cost_voucher_doc.taxes:
+            total_cost_debit_account = sum([ i.get("amount") for i in landed_cost_voucher_doc.taxes ])
+        
+        debit_account_list.append({'account':debit_account_new,'amount':total_cost_debit_account})    
+            
 
         if based_on_field:
             for item in landed_cost_voucher_doc.items:
@@ -137,20 +143,22 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
                         )
                         
             ### make debit entry 
-                debit_new_amount = flt(item.landed_cost_voucher_amount / len(debit_accounts))
-                frappe.db.set_value('Purchase Receipt Item', item.name, 'custom_debit_account', debit_accounts[-1])
-                for dbcnt in debit_accounts:
-                    self.add_gl_entry(
-                        gl_entries=gl_entries,
-                        account=dbcnt,
-                        cost_center=item.cost_center,
-                        debit=debit_new_amount,
-                        against_account=stock_asset_account_name,
-                        credit=0.0,
-                        remarks=remarks,
-                        project=item.project,
-                        item=item,
-                    )            
+                if len(debit_accounts)>0:
+                    debit_new_amount = flt(item.landed_cost_voucher_amount / len(debit_accounts))
+                    frappe.db.set_value('Purchase Receipt', self.name, 'custom_landed_cost_details', str(debit_accounts))
+                    for dbcnt in debit_accounts:
+                        self.add_gl_entry(
+                            gl_entries=gl_entries,
+                            account=dbcnt.get('account'),
+                            cost_center=item.cost_center,
+                            debit=dbcnt.get('amount'),
+                            against_account=stock_asset_account_name,
+                            credit=0.0,
+                            remarks=remarks,
+                            project=item.project,
+                            item=item,
+                        )   
+                                 
         if via_landed_cost_voucher:
             for d in self.get("items"):
                 """ For Landed Cost Voucher """

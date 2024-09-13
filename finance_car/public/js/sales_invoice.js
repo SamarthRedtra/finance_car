@@ -88,14 +88,16 @@ frappe.ui.form.on('Sales Invoice', {
                     } else {
                         frappe.msgprint(__('No accounting entries found in the selected Purchase Receipt.'));
                     }
-                    if (doc.items && doc.items.length > 0) {
+                    if (doc.custom_landed_cost_details) {
                         // Loop through accounting entries in the Purchase Receipt
-                        doc.items.forEach(entry => {
-                            if (entry.landed_cost_voucher_amount > 0 && entry.custom_debit_account) { // Only consider entries with debit values
+                        let debit_acounts = safeParseLandedCostDetails(doc.custom_landed_cost_details);
+                        console.log(debit_acounts)
+                        debit_acounts.forEach(entry => {
+                            if (entry.amount > 0 && entry.account) { // Only consider entries with debit values
                                 // Append to the Sales Invoice's child table
                                 let new_row = frm.add_child('custom_accouting_entry');
-                                new_row.account = entry.custom_debit_account;  // Set account value
-                                new_row.credit = entry.landed_cost_voucher_amount;      // Set debit value
+                                new_row.account = entry.account;  // Set account value
+                                new_row.credit = entry.amount;      // Set debit value
                                 new_row.debit = 0;                 
                             }
                         });
@@ -114,8 +116,6 @@ frappe.ui.form.on('Sales Invoice', {
         }
     },
     custom_get_accouting_entries: function(frm) {
-        if (frm.doc.custom_purchase_receipt) {
-            // Call the docmethod from the server-side class
             frappe.dom.freeze('Getting accounting entries...');
             frappe.call({
                 method: "before_insert",
@@ -132,7 +132,6 @@ frappe.ui.form.on('Sales Invoice', {
                     }
                 }
             });
-        }
     }
 });
 
@@ -152,4 +151,30 @@ function calculate_totals(frm) {
     frm.refresh_field('custom_total_debit');
     frm.refresh_field('custom_total_credit');
     console.log(total_debit, total_credit,"00")
+}
+
+// Helper function to safely parse custom_landed_cost_details
+function safeParseLandedCostDetails(jsonString) {
+    try {
+        // Try to parse the JSON string normally
+        return JSON.parse(jsonString);
+    } catch (error) {
+        console.warn('Initial JSON parse failed:', error);
+        
+        // Attempt to fix common issues with improperly formatted JSON strings
+        let sanitizedString = jsonString
+            .replace(/'/g, '"')   // Replace single quotes with double quotes
+            .replace(/None/g, 'null') // Replace Python's None with null
+            .replace(/True/g, 'true') // Replace True with true
+            .replace(/False/g, 'false'); // Replace False with false
+        
+        try {
+            // Try to parse the sanitized string
+            return JSON.parse(sanitizedString);
+        } catch (sanitizationError) {
+            console.error('Sanitized string parse also failed:', sanitizationError);
+            frappe.msgprint(__('Unable to parse landed cost details.'));
+            return null; // Return null or an empty array as a fallback
+        }
+    }
 }
