@@ -78,6 +78,40 @@ def get_item_account_wise_additional_cost(purchase_document):
     print(" debit_account_list",debit_account_list)
     return item_account_wise_cost,debit_account_list
 
+def delete_existing_gl_entry(voucher_no, account, debit, credit):
+    """
+    Delete existing GL entries using an SQL query and log the names of deleted entries.
+    """
+    try:
+        # Fetch existing GL entries
+        existing_gl_entries = frappe.get_all('GL Entry', filters={
+            'voucher_no': voucher_no,
+            'account': account,
+            'debit': debit,
+            'credit': credit
+        }, fields=['name'])
+
+        # Check if there are entries to delete
+        if existing_gl_entries:
+            # Log the GL entry names before deletion
+            entry_names = [entry['name'] for entry in existing_gl_entries]
+            frappe.logger().info(f"Deleting GL Entries: {', '.join(entry_names)}")
+
+            # Log the GL entry names as a Frappe message (optional, for user feedback)
+            frappe.log_error(message=f"Deleted GL Entries: {', '.join(entry_names)}",title="Deleted GL Entries")
+
+            # Delete the entries using an SQL query
+            frappe.db.sql("""
+                DELETE FROM `tabGL Entry`
+                WHERE voucher_no = %s AND account = %s AND debit = %s AND credit = %s
+            """, (voucher_no, account, debit, credit))
+
+            # Commit the deletion
+            frappe.db.commit()
+
+    except Exception as e:
+        frappe.throw(f"Error deleting GL entry: {str(e)}")
+
 
 class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
     def on_submit(self):
@@ -113,8 +147,8 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
             frappe.throw(_("{0} account not found while submitting purchase receipt").format(account_type))  
         def get_debit_account(lvc):
             return frappe.db.get_value('Landed Cost Voucher', lvc, 'custom_debit_account')      
-        def make_landed_cost_gl_entries(item,debit_accounts):
-            # Amount added through landed-cost-voucher
+        def make_landed_cost_gl_entries(item, debit_accounts):
+    # Amount added through landed-cost-voucher
             if item.landed_cost_voucher_amount and landed_cost_entries:
                 if (item.item_code, item.name) in landed_cost_entries:
                     for account, amount in landed_cost_entries[(item.item_code, item.name)].items():
@@ -128,37 +162,82 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
                         if not account:
                             validate_account("Landed Cost Account")
 
-                        self.add_gl_entry(
-                            gl_entries=gl_entries,
-                            account=account,
-                            cost_center=item.cost_center,
-                            debit=0.0,
-                            credit=credit_amount,
-                            remarks=remarks,
-                            against_account=stock_asset_account_name,
-                            credit_in_account_currency=flt(amount["amount"]),
-                            account_currency=account_currency,
-                            project=item.project,
-                            item=item,
-                        )
+                        # Check if GL entry already exists
+                        #delete_existing_gl_entry(self.name, account, 0.0, credit_amount)
+                       
+                        # self.add_gl_entry(
+                        #     gl_entries=gl_entries,
+                        #     account=account,
+                        #     cost_center=item.cost_center,
+                        #     debit=0.0,
+                        #     credit=credit_amount,
+                        #     remarks=remarks,
+                        #     against_account=stock_asset_account_name,
+                        #     credit_in_account_currency=flt(amount["amount"]),
+                        #     account_currency=account_currency,
+                        #     project=item.project,
+                        #     item=item,
+                        # )
+                        gl_entries.append(
+                                self.get_gl_dict(
+                                    {
+                                        "account": account,
+                                        "credit": credit_amount,
+                                        "against": '',
+                                        'project': item.project,
+                                        "remarks": remarks,
+                                        "cost_center": item.cost_center,
+                                        "voucher_type": 'Purchase Receipt',
+                                        "voucher_no": self.name,
+                                        "posting_date": self.posting_date,
+                                        "is_opening": self.get("is_opening") or "No",
+                                        "credit_in_account_currency":flt(amount["amount"]),
+                                        "account_currency":account_currency
+                                    },
+                                    item=item
+                                )
+                            ) 
                         
-            ### make debit entry 
-                if len(debit_accounts)>0:
+                            
+                ### Make debit entry
+                if len(debit_accounts) > 0:
                     debit_new_amount = flt(item.landed_cost_voucher_amount / len(debit_accounts))
                     frappe.db.set_value('Purchase Receipt', self.name, 'custom_landed_cost_details', str(debit_accounts))
+                    
                     for dbcnt in debit_accounts:
-                        self.add_gl_entry(
-                            gl_entries=gl_entries,
-                            account=dbcnt.get('account'),
-                            cost_center=item.cost_center,
-                            debit=dbcnt.get('amount'),
-                            against_account=stock_asset_account_name,
-                            credit=0.0,
-                            remarks=remarks,
-                            project=item.project,
-                            item=item,
-                        )   
-                                 
+                        # Check if GL entry already exists
+                        # delete_existing_gl_entry(self.name, dbcnt.get('account'), dbcnt.get('amount'), 0.0)
+                        # self.add_gl_entry(
+                        #     gl_entries=gl_entries,
+                        #     account=dbcnt.get('account'),
+                        #     cost_center=item.cost_center,
+                        #     debit=dbcnt.get('amount'),
+                        #     against_account=stock_asset_account_name,
+                        #     credit=0.0,
+                        #     remarks=remarks,
+                        #     project=item.project,
+                        #     item=item,
+                        # )
+                        gl_entries.append(
+                                self.get_gl_dict(
+                                    {
+                                        "account": dbcnt.get('account'),
+                                        "debit":dbcnt.get('amount'),
+                                        "against": '',
+                                        'project': item.project,
+                                        "remarks": remarks,
+                                        "cost_center": item.cost_center,
+                                        "voucher_type": 'Purchase Receipt',
+                                        "voucher_no": self.name,
+                                        "posting_date": self.posting_date,
+                                        "is_opening": self.get("is_opening") or "No",
+                                        "credit_in_account_currency":flt(amount["amount"]),
+                                        "account_currency":account_currency
+                                    },
+                                    item=item
+                                )
+                            ) 
+              
         if via_landed_cost_voucher:
             for d in self.get("items"):
                 """ For Landed Cost Voucher """
