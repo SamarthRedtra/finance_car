@@ -89,10 +89,10 @@ class CustomSalesInvoice(SalesInvoice):
                         })
                 
             if purchase_receipt.custom_landed_cost_details:
-                debits_accounts = json.loads(purchase_receipt.custom_landed_cost_details)
+                debits_accounts = eval(purchase_receipt.custom_landed_cost_details)
                 for i in debits_accounts:
                     if i.get('account') and i.get('amount')>0:
-                        total_credit += i.landed_cost_voucher_amount
+                        total_credit += i.get('amount')
                         self.append("custom_accouting_entry", {
                             'account': i.get('account'),
                             'debit': 0,

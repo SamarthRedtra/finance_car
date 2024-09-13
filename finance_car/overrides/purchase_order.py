@@ -15,7 +15,21 @@ class CustomPurchaseOrder(PurchaseOrder):
             frappe.db.sql("UPDATE `tabPurchase Order` SET status = 'Pending CIT' WHERE name = %(name)s", {'name':self.name})
             self.reload()
             print('Exscuteds')
+            
+        if len(self.items)>0 and self.items[0].custom_chassis_no != self.custom_chassis_no:
+            print("hhhe",self.items[0].custom_chassis_no) 
+            frappe.db.set_value('Purchase Order', self.name, 'custom_chassis_no', self.items[0].custom_chassis_no)
+            frappe.db.commit()
 
+    def before_insert(self):
+        print("Exscuted",self.items[0].custom_chassis_no)
+        if len(self.items)>0:
+           chassi_no = self.items[0].custom_chassis_no 
+        print(frappe.db.exists('Purchase Order', {'custom_chassis_no':chassi_no, 'docstatus':1}),"000")
+        if frappe.db.exists('Purchase Order', {'custom_chassis_no':chassi_no, 'docstatus':1}):
+            poname = frappe.db.get_value('Purchase Order', {'custom_chassis_no':chassi_no}, 'name')
+            frappe.throw(f'Chassis No Already Exists For PO: {poname}')  
+               
     def post_accouting_entry(self):
         for row in self.custom_accouting_entry:
             frappe.get_doc({
