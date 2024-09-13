@@ -112,6 +112,27 @@ frappe.ui.form.on('Sales Invoice', {
 
                 });
         }
+    },
+    custom_get_accouting_entries: function(frm) {
+        if (frm.doc.custom_purchase_receipt) {
+            // Call the docmethod from the server-side class
+            frappe.dom.freeze('Getting accounting entries...');
+            frappe.call({
+                method: "before_insert",
+                doc: frm.doc,  
+                args:{
+                 is_web: 1
+                } ,  // Document name (ID)
+                callback: function(r) {
+                    frappe.dom.unfreeze();
+                    if (r.message) {
+                        frappe.msgprint(__('Custom method executed: ' + r.message.message));
+                        frm.refresh();
+                        frm.reload_doc() // Refresh the form if required
+                    }
+                }
+            });
+        }
     }
 });
 

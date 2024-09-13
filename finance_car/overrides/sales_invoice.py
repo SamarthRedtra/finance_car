@@ -37,8 +37,8 @@ class CustomSalesInvoice(SalesInvoice):
                             item=custom_entry
                         )
                     )
-
-    def before_insert(self):
+    @frappe.whitelist()
+    def before_insert(self,is_web = False):
         from erpnext.accounts.general_ledger import merge_similar_entries
 
         gl_entries = []
@@ -62,6 +62,7 @@ class CustomSalesInvoice(SalesInvoice):
         print("gl entries",gl_entries)
         total_debit = 0
         total_credit = 0
+        self.custom_accouting_entry = []
         if len(gl_entries)>0:
             for i in gl_entries:
                 total_debit += i.debit
@@ -72,8 +73,36 @@ class CustomSalesInvoice(SalesInvoice):
                     'credit': i.credit,
                 })
                 
+        if self.custom_purchase_receipt:
+            purchase_receipt = frappe.get_doc(
+                "Purchase Receipt", self.custom_purchase_receipt
+            )
+            if len(purchase_receipt.custom_accouting_entry):
+                for i in purchase_receipt.custom_accouting_entry:
+                    if i.debit > 0:
+                        total_credit += i.debit
+                        self.append("custom_accouting_entry", {
+                            'account': i.account,
+                            'debit': 0,
+                            'credit': i.debit,
+                        })
+                
+            if len(purchase_receipt.items)>0:
+                for i in purchase_receipt.items:
+                    if i.custom_debit_account and i.landed_cost_voucher_amount>0:
+                        total_credit += i.landed_cost_voucher_amount
+                        self.append("custom_accouting_entry", {
+                            'account': i.custom_debit_account,
+                            'debit': 0,
+                            'credit': i.landed_cost_voucher_amount
+                        })        
+                        
+                
         self.custom_total_debit = flt(total_debit) 
-        self.custom_total_credit = flt(total_credit)       
+        self.custom_total_credit = flt(total_credit)    
+        if is_web == 1 or is_web == "1":
+            self.save(ignore_permissions=True)
+            frappe.db.commit()   
                 
                 
         
