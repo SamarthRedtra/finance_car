@@ -148,7 +148,7 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
         def get_debit_account(lvc):
             return frappe.db.get_value('Landed Cost Voucher', lvc, 'custom_debit_account')      
         def make_landed_cost_gl_entries(item, debit_accounts):
-    # Amount added through landed-cost-voucher
+             # Amount added through landed-cost-voucher
             if item.landed_cost_voucher_amount and landed_cost_entries:
                 if (item.item_code, item.name) in landed_cost_entries:
                     for account, amount in landed_cost_entries[(item.item_code, item.name)].items():
@@ -238,20 +238,20 @@ class CustomPurchaseReceipt(PurchaseReceipt, CustomStockController):
                                 )
                             ) 
               
-        if via_landed_cost_voucher:
-            for d in self.get("items"):
-                """ For Landed Cost Voucher """
-                if flt(d.qty) and (flt(d.valuation_rate) or self.is_return):
-                    remarks = self.get("remarks") or _("Accounting Entry for {0}").format(
-                        "Asset" if d.is_fixed_asset else "Stock"
-                    )
-                    landed_cost_entries,debit_accounts = get_item_account_wise_additional_cost(self.name)
-                    if d.is_fixed_asset:
-                        stock_asset_account_name = d.expense_account
-                    elif warehouse_account.get(d.warehouse):
-                        stock_asset_account_name = warehouse_account[d.warehouse]["account"]
-                    if (flt(d.valuation_rate) or self.is_return or d.is_fixed_asset) and flt(d.qty) :
-                        make_landed_cost_gl_entries(d,debit_accounts)
+        
+        for d in self.get("items"):
+            """ For Landed Cost Voucher """
+            if flt(d.qty) and (flt(d.valuation_rate) or self.is_return):
+                remarks = self.get("remarks") or _("Accounting Entry for {0}").format(
+                    "Asset" if d.is_fixed_asset else "Stock"
+                )
+                landed_cost_entries,debit_accounts = get_item_account_wise_additional_cost(self.name)
+                if d.is_fixed_asset:
+                    stock_asset_account_name = d.expense_account
+                elif warehouse_account.get(d.warehouse):
+                    stock_asset_account_name = warehouse_account[d.warehouse]["account"]
+                if (flt(d.valuation_rate) or self.is_return or d.is_fixed_asset) and flt(d.qty) :
+                    make_landed_cost_gl_entries(d,debit_accounts)
         
         update_regional_gl_entries(gl_entries, self)               
         if len(self.custom_accouting_entry) > 0:
