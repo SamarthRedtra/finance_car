@@ -39,6 +39,8 @@ class CustomPurchaseOrder(PurchaseOrder):
                 "party":self.supplier,
                 "debit": row.debit,
                 "credit": row.credit,
+                "debit_in_account_currency":row.debit,
+                "credit_in_account_currency":row.credit,
                 "cost_center": row.get('cost_center') or frappe.get_cached_value("Company", self.company, "cost_center"),
                 "voucher_type": 'Purchase Order',
                 "voucher_no": self.name,
@@ -46,6 +48,55 @@ class CustomPurchaseOrder(PurchaseOrder):
                 "remarks": self.custom_user_remarks,
             }).insert(ignore_permissions=True).submit()   
 
+    def on_cancel(self):
+        # Reverse GL entries upon cancellation
+        self.reverse_custom_gl_entries()
+        # Call the original on_cancel method to retain standard behavior
+        super().on_cancel()
+        
+    
+    def reverse_custom_gl_entries(self):
+        # Get the original GL entries for this Purchase Order
+        gl_entries = frappe.get_all(
+            "GL Entry",
+            filters={
+                "voucher_type": "Purchase Order",
+                "voucher_no": self.name,
+                "is_cancelled": 0  # Only fetch active GL entries
+            },
+            fields=["*"]
+        )
+
+        if gl_entries:
+            for entry in gl_entries:
+                # Create a new reversed GL entry by swapping debit and credit
+                reversed_gl_entry = frappe.get_doc({
+                    "doctype": "GL Entry",
+                    "account": entry.account,
+                    "party_type": entry.party_type,
+                    "party": entry.party,
+                    "debit": entry.credit,  # Swap debit and credit
+                    "credit": entry.debit,
+                    "debit_in_account_currency": entry.credit_in_account_currency,
+                    "credit_in_account_currency": entry.debit_in_account_currency,
+                    "cost_center": entry.cost_center,
+                    "voucher_type": entry.voucher_type,
+                    "voucher_no": entry.voucher_no,
+                    "posting_date": frappe.utils.nowdate(),  # Use current date for the reversal
+                    "company": entry.company,
+                    "remarks": "Reversed entry for cancellation of Purchase Order " + self.name,
+                    "is_cancelled": 1  # Mark the reversed entry as canceled
+                })
+                reversed_gl_entry.insert(ignore_permissions=True)
+                reversed_gl_entry.submit()
+
+            # Mark original entries as canceled
+            frappe.db.sql("""
+                UPDATE `tabGL Entry`
+                SET is_cancelled = 1
+                WHERE voucher_type = 'Purchase Order' AND voucher_no = %s
+            """, self.name)
+        
     def on_submit(self):
         if len(self.custom_accouting_entry) == 0:
             frappe.throw('Please Put Accouting Entry For CIT Accounting')
