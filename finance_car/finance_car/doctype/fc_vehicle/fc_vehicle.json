@@ -19,6 +19,7 @@
   "color",
   "year",
   "assignees_details_section",
+  "investor",
   "investor_name",
   "mulkia_name",
   "column_break_yvyt",
@@ -238,10 +239,10 @@
    "label": "Assignees Details"
   },
   {
+   "fetch_from": "investor.investor_name",
    "fieldname": "investor_name",
    "fieldtype": "Data",
-   "label": "Investor Name",
-   "reqd": 1
+   "label": "Investor Name"
   },
   {
    "fieldname": "column_break_yvyt",
@@ -257,10 +258,18 @@
    "fieldtype": "Data",
    "label": "Mulkia Name",
    "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "investor",
+   "fieldtype": "Link",
+   "label": "Investor Name",
+   "options": "Investor",
+   "reqd": 1
   }
  ],
  "links": [],
- "modified": "2024-09-03 00:03:14.233915",
+ "modified": "2024-11-08 22:52:32.776300",
  "modified_by": "Administrator",
  "module": "Finance Car",
  "name": "FC Vehicle",
