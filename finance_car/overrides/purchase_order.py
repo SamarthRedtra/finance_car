@@ -29,6 +29,13 @@ class CustomPurchaseOrder(PurchaseOrder):
         if frappe.db.exists('Purchase Order', {'custom_chassis_no':chassi_no, 'docstatus':1}):
             poname = frappe.db.get_value('Purchase Order', {'custom_chassis_no':chassi_no}, 'name')
             frappe.throw(f'Chassis No Already Exists For PO: {poname}')  
+            
+    
+    def before_submit(self):
+        if self.custom_total_debit >0 and self.custom_total_credit > 0 and  self.custom_total_debit != self.custom_total_credit:
+            frappe.throw("Debit and Credit Should be Equal")
+            
+                    
                
     def post_accouting_entry(self):
         for row in self.custom_accouting_entry:
