@@ -31,7 +31,7 @@ class CustomStockController(StockController):
             warehouse_account = get_warehouse_account_map(self.company)
             if self.docstatus == 1:
                 if not gl_entries:
-                    gl_entries = self.get_gl_entries(warehouse_account, via_landed_cost_voucher) if via_landed_cost_voucher == True else self.get_gl_entries(warehouse_account) 
+                    gl_entries = self.get_gl_entries(warehouse_account, via_landed_cost_voucher) 
 
                 merge_value = frappe.get_doc(
                     'Finance Car Settings'

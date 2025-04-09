@@ -12,7 +12,24 @@ class CustomSalesInvoice(SalesInvoice):
         print('heee called here from brow')
         self.make_custom_accounting_gl_entry(gl_entries)
         
-
+        
+        accounts = [i.get('account') for i in gl_entries]
+        values = frappe.get_all(
+            "Account",
+            filters={
+                "name": ["in", accounts]
+            },
+            fields=["name", "root_type", "account_type"],
+        )
+                
+        for i in gl_entries:
+            for j in values:
+                if i.get('account') == j.get('name') and j.get('root_type') == 'Income':
+                    i.update({
+                        'party_type': None,
+                        'party': None,
+                    })
+                    
         return gl_entries
     
     def make_custom_accounting_gl_entry(self, gl_entries):

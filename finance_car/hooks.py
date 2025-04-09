@@ -127,7 +127,6 @@ override_doctype_class = {
     "Sales Invoice": "finance_car.overrides.sales_invoice.CustomSalesInvoice",
     "Purchase Receipt": "finance_car.overrides.purchase_receipt.CustomPurchaseReceipt"
 }
-
 # Document Events
 # ---------------
 # Hook on document methods and events

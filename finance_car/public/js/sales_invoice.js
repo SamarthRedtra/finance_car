@@ -60,6 +60,36 @@ frappe.ui.form.on('Accounting Entries', {
 
 frappe.ui.form.on('Sales Invoice', {
     // Trigger this function when the custom_purchase_receipt field is updated
+
+
+    custom_get_purchase_receipt: async function(frm) {
+        console.log(frm.doc.custom_purchase_receipt,"custom_purchase_receipt")
+        if(frm.doc.custom_purchase_receipt){
+            frappe.msgprint(__('Purchase Receipt already selected'));
+            return
+        }
+        if(frm.doc.items.length == 0){
+            frappe.msgprint(__('Please add items to the invoice before selecting a purchase receipt.'));
+            return
+        }
+        if(frm.doc.items[0].custom_chassis_ == undefined){
+            frappe.msgprint(__('Please add chassis number to the invoice before selecting a purchase receipt.'));
+            return
+        }
+        frappe.dom.freeze('Getting accounting entries...');
+    
+        const response = await frappe.db.get_value('Purchase Receipt Item', { 'docstatus': 1, 'custom_chassis': frm.doc.items[0].custom_chassis_ , 'item_code': frm.doc.items[0].item_code }, 'parent', ()=>{}, 'Purchase Receipt');
+        console.log(response)
+        frappe.dom.unfreeze();
+
+        if (response && response.message) {
+            let purchase_receipt = response.message.parent;
+            console.log(purchase_receipt)
+            frm.set_value('custom_purchase_receipt', purchase_receipt);
+            frappe.msgprint(__('Purchase Receipt found: ' + purchase_receipt));
+            frm.refresh_field('custom_purchase_receipt');
+        }
+    },
     custom_purchase_receipt: function(frm) {
         console.log('hshhess changes')
         if (frm.doc.custom_purchase_receipt) {
