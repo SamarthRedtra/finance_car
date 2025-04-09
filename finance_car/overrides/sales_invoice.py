@@ -24,7 +24,7 @@ class CustomSalesInvoice(SalesInvoice):
                 
         for i in gl_entries:
             for j in values:
-                if i.get('account') == j.get('name') and j.get('root_type') == 'Income':
+                if i.get('account') == j.get('name') and j.get('account_type') not in ['Receivable', 'Payable']:
                     i.update({
                         'party_type': None,
                         'party': None,
